@@ -13,7 +13,8 @@ const destinationSchema = new Schema({
   }
 }, {
   timestamps: true
-})
+});
+
 
 
 
@@ -21,11 +22,17 @@ const flightSchema = new Schema({
   airline: { type: String, enum: ['American','United','Southwest']},
   airport: { type: String, enum: ['AUS','DFW','DEN','LAX','SAN'] },
   flightNo: { type: Number,  min: 10, max: 9999},
-  departs: {type: Date, default: function() {return new Date(new Date().setFullYear(new Date().getFullYear() + 1)); }},
-  destinations: [destinationSchema]
+  departs: {
+type: Date, default: function() {
+return new Date(new Date().setFullYear(new Date().getFullYear() + 1)); 
+  }},
+  destinations: [destinationSchema],
+  
+
 }, {
 timestamps: true
 });
+
 
 
 

@@ -1,5 +1,5 @@
 const Flight = require('../models/flight');
-
+const Ticket = require("../models/ticket");
 
 module.exports = {
   index,
@@ -14,9 +14,13 @@ function index(req,res) {
  });
 }
 
+
+
 function show(req, res) {
-  Flight.findById(req.params.id, function(err, flight) {
-    res.render('flights/show', { title: 'Flight Detail', flight });
+  Flight.findOne({ _id: req.params.id }, function (err, flight) {
+    Ticket.find({ flight: flight._id }, function (err, tickets) {
+      res.render("flights/show", { title: 'Flight Detail',flight, tickets });
+    });
   });
 }
 
@@ -26,20 +30,10 @@ function newFlight(req, res) {
 }
 
 function create(req, res) {
-  // convert nowShowing's checkbox of nothing or "on" to boolean
-  //req.body.nowShowing = !!req.body.nowShowing;
-  // remove any whitespace at start and end of cast
-  //req.body.cast = req.body.cast.trim();
-  // split cast into an array if it's not an empty string - using a regular expression as a separator
-  //if (req.body.cast) req.body.cast = req.body.cast.split(/\s*,\s*/);
-  
-  const flight = new Flight(req.body);
-  flight.save(function(err) {
-    // if we don't redirect, the new page will be shown
-    // with /flights in the address bar
+    const flight = new Flight(req.body);
+    flight.save(function(err) {
     if (err) return res.redirect('/flights/new');
     console.log(flight);
-    // for now, redirect right back to new.ejs
     res.redirect('/flights');
   });
 }
