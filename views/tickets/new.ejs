@@ -3,6 +3,8 @@
 <h2>Enter a New Ticket</h2>
 <form action="/flights/<%= flightId %>/tickets" method="POST">
 
+<p><b>Seat:</b> Must contain 1 Uppercase letter followed by a number without any spaces between the two.</p>
+<p><b>Price:</b> Must only be a singular nonsigned integer.</p>
 
   <label>Seat
     <input type="String" name="seat">
